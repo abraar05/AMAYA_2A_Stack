@@ -1,0 +1,11 @@
+{
+  "name": "amaya-2a-stack",
+  "version": "1.0.0",
+  "description": "2A-Stack — AMAYA Industries IMEI Control Center (synthetic demo).",
+  "private": true,
+  "scripts": {
+    "start": "python3 -m http.server 8810 --bind 127.0.0.1",
+    "serve": "npx --yes http-server -p 8810 -c-1",
+    "check": "node --check js/config.js && node --check js/data.js && node --check js/auth.js && node --check js/app.js && node --check js/modules.js"
+  }
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-theme="graphite" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080a0f">
+<title>2A-Stack — IMEI Control Center (AMAYA Industries)</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="login"><div class="logincard"><div class="brand" style="padding:0 0 14px"><div class="logo">2A</div><div><b>2A-STACK</b><small>AMAYA Industries · IMEI Control Center</small></div></div>
+<input id="login-email" placeholder="Email" value="admin@2astack.app">
+<input id="login-pass" type="password" placeholder="Password">
+<div id="login-err"></div>
+<button class="btn primary" style="width:100%" onclick="nexusLogin()">Sign in</button>
+<p class="muted" style="font-size:11px;margin-top:12px">Demo credentials: <b>admin@2astack.app</b> / <b>Stack@2026</b></p></div></div>
+
+<div class="app">
+<aside class="side">
+ <div class="brand"><div class="logo">2A</div><div><b>2A-STACK</b><small>IMEI Control Center</small></div></div>
+ <div class="workspace"><b>AMAYA Industries</b><small>Synthetic demo · Enterprise</small></div>
+ <div class="navlabel">Control Center</div>
+ <nav class="nav">
+  <button class="active" data-page="overview"><i class="ico">◈</i><span>Overview</span></button>
+  <button data-page="search"><i class="ico">⌕</i><span>IMEI Search</span></button>
+  <button data-page="ledger"><i class="ico">▦</i><span>Asset Ledger</span></button>
+  <button data-page="evidence"><i class="ico">↝</i><span>Movement Evidence</span></button>
+  <button data-page="review"><i class="ico">✓</i><span>Review Queue</span></button>
+  <button data-page="dataio"><i class="ico">⇄</i><span>Import / Export</span></button>
+  <button data-page="guide"><i class="ico">?</i><span>Methodology</span></button>
+ </nav>
+ <div class="navlabel">System</div>
+ <nav class="nav">
+  <button data-page="account"><i class="ico">⚙</i><span>Account</span></button>
+ </nav>
+</aside>
+<main class="main">
+<header class="top"><div class="crumb" id="crumb">Overview</div><div class="search">⌕ &nbsp; Search or use <kbd>⌘ K</kbd></div><div class="actions"><button class="icon" onclick="openAI()">✦</button><button class="icon" data-toast="No new notifications">♢</button><button class="icon" onclick="toggleMode()">◐</button></div></header>
+<section class="content">
+
+<div id="overview" class="page active">
+<div class="hero"><div><h1>IMEI Control Center</h1><p>Synthetic demonstration of the AMAYA IMEI Control Center. Every identifier, event and count here is fabricated — not AMAYA inventory data.</p></div><div class="actions"><button class="btn" onclick="openAI()">✦ Ask AI</button><button class="btn primary" data-page="dataio">＋ Import ledger bundle</button></div></div>
+<div class="grid kpis">
+<div class="card kpi"><small>Identifiers tracked</small><div class="metric" id="k-total">—</div><div class="trend">across 4 source tabs</div></div>
+<div class="card kpi"><small>Latest states resolved</small><div class="metric" id="k-resolved">—</div><div class="trend">of every device</div></div>
+<div class="card kpi"><small>Movement conflicts</small><div class="metric" id="k-conflicts">—</div><div class="trend bad">need review</div></div>
+<div class="card kpi"><small>Never classified</small><div class="metric" id="k-unclassified">—</div><div class="trend warn">no source recorded product</div></div>
+</div>
+<div class="grid split">
+<div class="card"><div class="head"><h3>Ledger health</h3><button class="btn" data-page="ledger">Open ledger →</button></div><div class="chart"><svg viewBox="0 0 800 220" preserveAspectRatio="none"><g stroke="var(--line)"><line x1="0" y1="35" x2="800" y2="35"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="165" x2="800" y2="165"/></g><path d="M0 170 C80 150 110 160 180 125 S280 145 350 105 S450 125 520 83 S650 105 800 48" fill="none" stroke="var(--accent)" stroke-width="4"/><path d="M0 190 C90 185 140 190 220 165 S330 178 420 148 S560 165 650 130 S730 138 800 115" fill="none" stroke="var(--accent2)" stroke-width="2"/></svg></div></div>
+<div class="card ai"><div class="head"><h3>Control Center intelligence</h3><span class="pill">Local AI</span></div><div class="body"><p class="muted">Three things worth checking today.</p><div class="insight"><strong>Conflicts</strong><br>3 IMEIs appear rolled back between two source tabs.</div><div class="insight"><strong>Undated</strong><br>12 occurrences ship without a date — they cannot anchor a trail.</div><div class="insight"><strong>Branding</strong><br>Two devices are labeled with two different brands at source.</div></div></div></div>
+<div class="grid modules" style="margin-top:12px">
+<div class="card module"><div class="ico">⌕</div><h3>IMEI Search</h3><p>Jump straight to an identifier's evidence trail from any state.</p><button class="btn" data-page="search">Open search →</button></div>
+<div class="card module"><div class="ico">▦</div><h3>Asset Ledger</h3><p>Latest resolved state per device, filters, CSV export.</p><button class="btn" data-page="ledger">Open ledger →</button></div>
+<div class="card module"><div class="ico">✓</div><h3>Review Queue</h3><p>Conflicts needing human eyes, with approve / reject trails.</p><button class="btn" data-page="review">Open queue →</button></div></div>
+</div>
+
+<div id="search" class="page">
+<div class="hero"><div><h1>IMEI Search</h1><p>Type a partial or full IMEI to jump straight to its evidence trail. Numbers match from the left, so a box-label prefix is enough.</p></div></div>
+<div class="card"><div class="body"><div class="searchbox"><input id="imei-q" placeholder="Search an IMEI…" onkeydown="if(event.key==='Enter')imeiSearch()"><button class="btn primary" onclick="imeiSearch()">Search</button></div><div class="filters" id="search-filters"></div><div id="search-result" class="body" style="padding:0"><p class="muted">Paste an IMEI to open its trail.</p></div></div></div>
+</div>
+
+<div id="ledger" class="page">
+<div class="hero"><div><h1>Asset Ledger</h1><p>Latest resolved state per identifier across every source tab.</p></div><div class="actions"><button class="btn" onclick="exportLedger()">⇩ Export CSV</button><button class="btn primary" data-page="dataio">＋ Import</button></div></div>
+<div class="card"><div class="head"><h3>Devices</h3><div class="filters" id="ledger-filters" style="margin:0"></div></div><div class="tablewrap"><table class="table"><thead><tr><th>IMEI</th><th>Model</th><th>Brand</th><th>Latest state</th><th>Sources</th><th>Last seen</th></tr></thead><tbody id="ledger-body"></tbody></table></div></div>
+</div>
+
+<div id="evidence" class="page">
+<div class="hero"><div><h1>Movement Evidence</h1><p>Every recorded occurrence, across every source tab, oldest first.</p></div><div class="actions"><button class="btn" onclick="exportEvidence()">⇩ Export TSV</button></div></div>
+<div class="card"><div class="head"><h3>Occurrences</h3><div class="filters" id="evidence-filters" style="margin:0"></div></div><div class="tablewrap"><table class="table"><thead><tr><th>When</th><th>IMEI</th><th>Source tab</th><th>State</th><th>Product</th><th>Note</th></tr></thead><tbody id="evidence-body"></tbody></table></div></div>
+</div>
+
+<div id="review" class="page">
+<div class="hero"><div><h1>Review Queue</h1><p>Conflicts needing human eyes. Approve or reject each with an audit note.</p></div></div>
+<div class="card"><div class="head"><h3>Queue</h3><span class="pill warn" id="review-count">—</span></div><div class="tablewrap"><table class="table"><thead><tr><th>IMEI</th><th>Issue</th><th>Sources</th><th>Severity</th><th>Status</th><th>Action</th></tr></thead><tbody id="review-body"></tbody></table></div></div>
+</div>
+
+<div id="dataio" class="page">
+<div class="hero"><div><h1>Import / Export</h1><p>Bring a ledger bundle in, or take the full audit trail out.</p></div></div>
+<div class="grid modules">
+<div class="card module"><div class="ico">⇩</div><h3>Download ledger data</h3><p>Full devices + evidence as a JSON bundle.</p><button class="btn" onclick="exportJSON()">Download JSON →</button></div>
+<div class="card module"><div class="ico">⇧</div><h3>Choose a ledger bundle</h3><p>Load a previously exported JSON bundle.</p><input type="file" id="io-file" accept=".json,application/json" style="margin:6px 0;font-size:12px" onchange="importBundle(this.files[0])"></div>
+<div class="card module"><div class="ico">↺</div><h3>Back to the bundled snapshot</h3><p>Discard any imported data and restore the demo snapshot.</p><button class="btn" onclick="resetSnapshot()">Restore snapshot →</button></div></div>
+</div>
+
+<div id="guide" class="page">
+<div class="hero"><div><h1>Methodology & data reference</h1><p>How a device is resolved, and the known limits of this demo.</p></div></div>
+<div class="card"><div class="body">
+<h3 style="margin-top:0">How a device is resolved</h3>
+<p class="muted">Each occurrence from every source tab is attached to its IMEI. The latest dated, non-conflicting occurrence wins and becomes the latest resolved state. Undated occurrences never anchor a trail. Brand and model conflicts surface in the Review Queue rather than being silently overwritten.</p>
+<h3>Movement conflicts</h3>
+<p class="muted">A conflict is two sources disagreeing on the latest terminal state for the same identifier. The Review Queue keeps them visible until a human approves or rejects.</p>
+<h3>Known limits</h3>
+<p class="muted">Nothing here calls the manufacturer. This view is synthetic, offline, and does not represent AMAYA inventory.</p>
+</div></div>
+</div>
+
+<div id="account" class="page">
+<div class="hero"><div><h1>Account</h1><p>Profile, session and local workspace preferences.</p></div><button class="btn" onclick="nexusLogout()">↪ Sign out</button></div>
+<div class="grid settings" style="grid-template-columns:1fr 1fr;gap:12px">
+<div class="card" style="padding:20px"><h3 style="margin-top:0">Session</h3><p class="muted">Signed in as <b id="who">admin</b> · role Owner.</p><button class="btn" onclick="nexusLogout()">Sign out</button></div>
+<div class="card" style="padding:20px"><h3 style="margin-top:0">Appearance</h3><p class="muted">Theme and display density for this device.</p><button class="btn" onclick="toggleMode()">Toggle light / dark</button></div>
+</div>
+</div>
+
+<div id="generated" class="page"></div>
+</section></main></div>
+
+<div class="drawer" id="drawer" onclick="if(event.target===this)closeAI()"><div class="drawerpanel"><div class="drawerhead"><div><div class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:.1em">Local intelligence</div><h2>Ledger Copilot</h2></div><button class="icon" onclick="closeAI()">×</button></div><p class="muted">Private, context-aware assistance over identifiers, evidence and conflicts.</p><div class="aiinput" style="margin-top:20px"><input id="q" placeholder="Ask: “Which IMEIs have no terminal state?”"><button class="send" onclick="answer()">↑</button></div><div id="answer" class="airesponse">Try asking about conflicts, undated occurrences, terminal-state gaps or source disagreement.</div><div class="insight" style="margin-top:18px"><b>Suggested</b>“Which devices never reached a terminal state?”</div><div class="insight"><b>Suggested</b>“Where do sources disagree on brand?”</div></div></div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/modules.js"></script>
+</body>
+</html>
